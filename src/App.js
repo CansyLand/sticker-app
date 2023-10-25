@@ -5,53 +5,26 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import FileDropzone from './components/FileDropzone';
+import Navbar from './components/Navbar';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 function App() {
-  const [pdfDataUri, setPdfDataUri] = useState(null);
-
-  useEffect(() => {
-    generatePDF();
-  }, []);
-
-  function generatePDF() {
-    const documentDefinition = {
-      content: "Hello World!"
-    };
-
-    const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
-    pdfDocGenerator.getDataUrl((dataUri) => {
-      setPdfDataUri(dataUri);
-    });
-  }
+  const [pdfDataUrl, setPdfDataUrl] = useState(null);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload 🍕
-          <br />
-          <button className="btn btn-primary">Click me</button>
-        </p>
-        {pdfDataUri && (
-          <iframe 
-            src={pdfDataUri} 
-            title="Generated PDF" 
-            width="100%" 
-            height="400px"
-          ></iframe>
+    <div className="flex flex-col w-full border-opacity-50">
+      <Navbar></Navbar>
+      <div className="grid card bg-base-300 rounded-box place-items-center">
+        {pdfDataUrl ? (
+          <iframe title="Generated PDF" src={pdfDataUrl} width="100%" height="600px"></iframe>
+        ) : (
+          <FileDropzone onFileProcessed={setPdfDataUrl} />
         )}
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      </div>
+     
     </div>
+
   );
 }
 
