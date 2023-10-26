@@ -2,6 +2,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import vfsFonts from 'pdfmake/build/vfs_fonts';
 import * as XLSX from 'xlsx';
 import { logo } from './privatsachen-logo.js';
+import { mergePages } from './mergePdf';
 
 
 const { vfs } = vfsFonts.pdfMake;
@@ -50,33 +51,35 @@ const processFile = (file, callback) => {
 
         const mmToPoints = (mm) => (mm * 72) / 25.4;
 
-        const pageWidth = mmToPoints(210);  // A4 width in mm
-        const pageHeight = mmToPoints(297); // A4 height in mm
-        
-        const stickerWidth = pageWidth / 2;  // A6 width (half of A4)
-        const stickerHeight = pageHeight / 2; // A6 height (half of A4)
+        const a4Width = mmToPoints(210);
+        const a4Height = mmToPoints(297);
 
-        const stickersPerPage = 4;
+        const pageWidth = a4Width / 2;  // A4 width in mm
+        const pageHeight = a4Height / 2; // A4 height in mm
+        
+        const stickerWidth = pageWidth; // / 2;  // A6 width (half of A4)
+        const stickerHeight = pageHeight; // / 2; // A6 height (half of A4)
+
+        // const stickersPerPage = 4;
         const totalRows = jsonData.length;
-        const totalPages = Math.ceil(totalRows / stickersPerPage);
+        // const totalPages = Math.ceil(totalRows / stickersPerPage);
 
         const pdfContent = [];
 
-        for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
+        for (let pageIndex = 0; pageIndex < totalRows; pageIndex++) {
             const pageContent = {
                 stack: [],
-                pageBreak: pageIndex < totalPages - 1 ? 'after' : '', // Add a page break after every page except the last one
-                // absolutePosition: { x: 0, y: 0 }, // Start at the top-left corner
+                pageBreak: pageIndex < totalRows - 1 ? 'after' : '', // Add a page break after every page except the last one
             };
             
-            for (let stickerIndex = 0; stickerIndex < stickersPerPage; stickerIndex++) {
-                const rowIndex = pageIndex * stickersPerPage + stickerIndex;
+            // for (let stickerIndex = 0; stickerIndex < stickersPerPage; stickerIndex++) {
+            //     const rowIndex = pageIndex * stickersPerPage + stickerIndex;
                 
-                if (rowIndex >= totalRows) {
+                if (pageIndex >= totalRows) {
                     break; // No more rows to process
                 }
 
-                const rowData = jsonData[rowIndex];
+                const rowData = jsonData[pageIndex];
 
                 const bezeichnung = rowData['bezeichnung'];
                 const warengruppe = rowData['warengruppe'];
@@ -87,44 +90,7 @@ const processFile = (file, callback) => {
                 // Waschsymbole
                 const madeIn = rowData['ursprungsland'];
                 const dateOfManufacture = rowData['erstelldatum'];
-                
-                // Generate content for this sticker based on rowData
-                // const stickerContent = {
-                //     stack: [
-                //         {
-                //             canvas: [
-                //                 {
-                //                     type: 'rect',
-                //                     x: 0,
-                //                     y: 0,
-                //                     w: stickerWidth,
-                //                     h: stickerHeight,
-                //                     lineWidth: 1,
-                //                     lineColor: 'black'
-                //                 }
-                //             ]
-                //         },
-                //         // {
-                //         //     margin: [5, 5, 5, 5], // Optional: Add some margin inside the canvas for the text
-                //         //     stack: [
-                //         //         { text: bezeichnung, style: 'stickerText', alignment: 'center' },
-                //         //         { text: warengruppe, style: 'stickerText', alignment: 'center' },
-                //         //         { text: model, style: 'stickerText', alignment: 'center' },
-                //         //         { text: articlelNr, style: 'stickerText', alignment: 'center' },
-                //         //         { text: composition, style: 'stickerText', alignment: 'center' },
-                //         //         { text: size, style: 'stickerText', alignment: 'center' },
-                //         //         { text: madeIn, style: 'stickerText', alignment: 'center' },
-                //         //         { text: dateOfManufacture, style: 'stickerText', alignment: 'center' },
-                //         //     ]
-                //         // }
-                //     ],
-                //     width: stickerWidth,
-                //     absolutePosition: {
-                //         x: (stickerIndex % 2) * stickerWidth, // No need to adjust for centering
-                //         y: Math.floor(stickerIndex / 2) * stickerHeight, // No need to adjust for centering
-                //     },
-                //     alignment: 'center'
-                // };
+          
 
                 const stickerBorder = {
                     canvas: [
@@ -140,21 +106,21 @@ const processFile = (file, callback) => {
                         { text: bezeichnung, style: 'stickerText', alignment: 'center' },
                     ],
                     absolutePosition: {
-                        x: (stickerIndex % 2) * stickerWidth, // 0 for the first and third canvas, stickerWidth for the second and fourth
-                        y: Math.floor(stickerIndex / 2) * stickerHeight, // 0 for the first and second canvas, stickerHeight for the third and fourth
+                        x: 0, //(stickerIndex % 2) * stickerWidth, // 0 for the first and third canvas, stickerWidth for the second and fourth
+                        y: 0 //Math.floor(stickerIndex / 2) * stickerHeight, // 0 for the first and second canvas, stickerHeight for the third and fourth
                     }
                 };
 
-                //const logoPosition
+
 
                 const stickerContent = {
                     stack: [
-                        { svg: logo, width: 150, absolutePosition: { 
-                            x: 0, 
-                            y: 250, } },
-                        { svg: logo, width: 500 },
-                        { text: stickerIndex, style: 'stickerText', alignment: 'center' },
-                        { text: bezeichnung, style: 'stickerText', alignment: 'center' },
+                        { svg: logo, width: 150, x: 67, y: 100 },
+                        // { text: pageIndex, style: 'stickerText', alignment: 'center' },
+                        { text: 'Cocon Commerz GmbH', style: 'stickerText', alignment: 'center', margin: [0, 20, 0, 0] },
+                        { text: 'Wendenstraße 404, 20537 Hamburg', style: 'stickerText', alignment: 'center' },
+                        { text: 'Germany', style: 'stickerText', alignment: 'center' },
+                        { text: bezeichnung, style: 'stickerText', alignment: 'center', margin: [0, 20, 0, 0] },
                         { text: warengruppe, style: 'stickerText', alignment: 'center' },
                         { text: model, style: 'stickerText', alignment: 'center' },
                         { text: articlelNr, style: 'stickerText', alignment: 'center' },
@@ -163,25 +129,25 @@ const processFile = (file, callback) => {
                         { text: madeIn, style: 'stickerText', alignment: 'center' },
                         { text: dateOfManufacture, style: 'stickerText', alignment: 'center' },
                     ],
-                    absolutePosition: {
-                        x: (stickerIndex % 2) * pageWidth - stickerWidth, // 0 for the first and third canvas, stickerWidth for the second and fourth
-                        y: Math.floor(stickerIndex / 2) * stickerHeight, // 0 for the first and second canvas, stickerHeight for the third and fourth
-                    }
+                    // absolutePosition: {
+                    //     x: (stickerIndex % 2) * pageWidth - stickerWidth, // 0 for the first and third canvas, stickerWidth for the second and fourth
+                    //     y: Math.floor(stickerIndex / 2) * stickerHeight, // 0 for the first and second canvas, stickerHeight for the third and fourth
+                    // }
                 };
                 
                 
                 
                 pageContent.stack.push(stickerBorder);
                 pageContent.stack.push(stickerContent);
-            }
+            //}
 
             pdfContent.push(pageContent);
         }
 
         const pdfDocDefinition = {
             content: pdfContent,
-            pageSize: 'A4',
-            pageMargins: [10, 10, 10, 10], // Adjust as needed
+            pageSize: 'A6',
+            pageMargins: [10, 100, 10, 10], // Adjust as needed
             styles: {
                 stickerText: {
                     fontSize: 10, // Adjust as needed
@@ -190,8 +156,14 @@ const processFile = (file, callback) => {
             }
         };
 
-        //pdfMake.createPdf(pdfDocDefinition).download('Stickers.pdf');
-        pdfMake.createPdf(pdfDocDefinition).getDataUrl(callback);
+        // pdfMake.createPdf(pdfDocDefinition).download('Stickers.pdf');
+        // pdfMake.createPdf(pdfDocDefinition).getDataUrl(callback);
+
+        // Merges 4 sticker to one page
+        pdfMake.createPdf(pdfDocDefinition).getBuffer(async (buffer) => {
+            const mergedPdfDataUrl = await mergePages(buffer);
+            callback(mergedPdfDataUrl);
+        });
 
 
         
