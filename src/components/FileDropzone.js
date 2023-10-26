@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import pdfMake from "pdfmake/build/pdfmake";
+import processFile from './../utils/processFile';
 
 function FileDropzone({ onFileProcessed }) {
   const fileInputRef = useRef(null);
@@ -19,18 +19,8 @@ function FileDropzone({ onFileProcessed }) {
   const handleFiles = (files) => {
     // Process the files here
     console.log(files);
+    processFile(files[0], onFileProcessed);
     
-    const pdfDocDefinition = {
-      content: [
-        'Hello World!', // This is just a sample content
-        // Add your processed data here
-      ],
-    };
-
-    pdfMake.createPdf(pdfDocDefinition).getDataUrl((dataUrl) => {
-      onFileProcessed(dataUrl);
-    });
-
   };
 
   const openFilePicker = () => {
