@@ -10,7 +10,7 @@ function Navbar() {
     <div className="flex-none">
       <ul className="menu menu-horizontal px-1">
         <li><Link to="/translation">Übersetzungen</Link></li>
-        <li>
+        {/* <li>
           <details>
             <summary>
               Parent
@@ -20,7 +20,7 @@ function Navbar() {
               <li><a to="/translation">Link 2</a></li>
             </ul>
           </details>
-        </li>
+        </li> */}
       </ul>
     </div>
   </div>

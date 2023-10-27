@@ -18,8 +18,8 @@ export async function mergePages(originalPdfBuffer) {
             i + 3 < pages.length ? newPdfDoc.embedPage(pages[i + 3]) : null,
         ]);
 
-        console.log(`Processing pages: ${i}, ${i + 1}, ${i + 2}, ${i + 3}`);
-        console.log(`Page existence: ${!!embeddedPage1}, ${!!embeddedPage2}, ${!!embeddedPage3}, ${!!embeddedPage4}`);
+        // console.log(`Processing pages: ${i}, ${i + 1}, ${i + 2}, ${i + 3}`);
+        // console.log(`Page existence: ${!!embeddedPage1}, ${!!embeddedPage2}, ${!!embeddedPage3}, ${!!embeddedPage4}`);
 
         const pageWidth = pages[i].getWidth();
         const pageHeight = pages[i].getHeight();

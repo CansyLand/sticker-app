@@ -31,7 +31,8 @@ function checkAndUpdateDatabase(jsonData, callback) {
         const columns = [
             'warengruppe',
             'qualitaet1_hinweis',
-            'ursprungsland'
+            'ursprungsland',
+            'farb_bezeichnung'
         ];
 
         // The SQLite database table is a little bit different structured
