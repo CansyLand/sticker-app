@@ -35,7 +35,7 @@ function TableRow({ tablerow }) {
 
   const handleInputChange = (id, lang, event) => {
     const newValue = event.target.value;
-    
+
     // Update the local state
     setData(prevData => {
         return prevData.map(row => {
@@ -59,13 +59,17 @@ function TableRow({ tablerow }) {
   return (
     <div className="overflow-x-auto">
         <h2 className="text-3xl font-bold ml-4 mt-10">{tablerow}</h2>
-
+  
         {loading && <p>Loading...</p>}
         {error && <p>Error: {error.message}</p>}
         <table className="table">
             <thead>
                 <tr>
-                    {headers.filter(header => header !== 'id' && header !== 'tablerow').map(header => (
+                    {headers.filter(header => {
+                        if (header === 'id' || header === 'tablerow') return false;
+                        if (header === 'wash' && tablerow !== 'qualitaet1_hinweis') return false;
+                        return true;
+                    }).map(header => (
                         <th key={header}>{header}</th>
                     ))}
                 </tr>
@@ -73,7 +77,11 @@ function TableRow({ tablerow }) {
             <tbody>
               {data.map(row => (
                 <tr key={row.id}>
-                  {headers.filter(header => header !== 'id' && header !== 'tablerow').map(header => (
+                  {headers.filter(header => {
+                      if (header === 'id' || header === 'tablerow') return false;
+                      if (header === 'wash' && tablerow !== 'qualitaet1_hinweis') return false;
+                      return true;
+                  }).map(header => (
                     <td key={header}>
                       {header === 'val' ? (
                         row[header]
@@ -82,9 +90,9 @@ function TableRow({ tablerow }) {
                           type="text"
                           value={row[header] || ''}
                           placeholder={row[header]} 
-                          className="input input-bordered w-full max-w-xs"
+                          className={`input input-bordered w-full max-w-xs ${header === 'wash' ? 'waesche-font' : ''}`}
                           onChange={(e) => handleInputChange(row.id, header, e)}
-                        />
+                      />
                       )}
                     </td>
                   ))}
@@ -94,6 +102,7 @@ function TableRow({ tablerow }) {
         </table>
     </div>
   );
+  
   
 }
 

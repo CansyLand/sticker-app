@@ -7,11 +7,29 @@ import checkAndUpdateDatabase from './checkAndUpdateDatabase.js';
 import { logo } from './privatsachen-logo.js';
 import { eacLogo } from './eac-logo.js'
 
+import { waeschefont } from './font.js'
+
 
 // Memo for later seperate pdf generation in own file
 
+vfsFonts.pdfMake.vfs["waesche7.ttf"] = waeschefont;
+
 const { vfs } = vfsFonts.pdfMake;
 pdfMake.vfs = vfs;
+
+pdfMake.fonts = {
+    Roboto: {
+        normal: 'Roboto-Regular.ttf',
+        bold: 'Roboto-Medium.ttf',
+        italics: 'Roboto-Italic.ttf',
+        bolditalics: 'Roboto-MediumItalic.ttf'
+      },
+    waesche7: {
+        normal: 'waesche7.ttf'
+    },
+  }
+  
+
 
 const processFile = (file, callback) => {
     if (!file && file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
@@ -120,10 +138,11 @@ const processFile = (file, callback) => {
                         { text: 'Größe/ Size/ Размер: ' + translate(translationTable, size, ['de'] ), style: 'stickerText', alignment: 'center', margin: [0, 10, 0, 0] },
                         // { text: translate(translationTable, size, ['de'] ), style: 'stickerText', alignment: 'center' },
 
-                        
+                        { text: translate(translationTable, composition, ['wash'] ), style: 'stickerText', alignment: 'center', font: 'waesche7', fontSize: 14, margin: [0, 10, 0, 0] },
+
                         { text: 'Intensive Farben separat waschen.\nWash intensive colours separately.\nИнтенсивный окрас, стирать отдельно.', style: 'stickerText', alignment: 'center', margin: [0, 10, 0, 0] },
 
-                        { text: 'Artikel / Article / Артикул: ' + articlelNr, style: 'stickerText', alignment: 'center', margin: [0, 20, 0, 0]  },
+                        { text: 'Artikel / Article / Артикул: ' + articlelNr, style: 'stickerText', alignment: 'center', margin: [0, 10, 0, 0]  },
                         { text: translate(translationTable, madeIn, languages), style: 'stickerText', alignment: 'center', margin: [0, 10, 0, 0] },
 
                         { text: 'Herstellungsdatum\nDate of manufacture\nДата изготовления:', style: 'stickerText', alignment: 'center', margin: [0, 10, 0, 0] },
