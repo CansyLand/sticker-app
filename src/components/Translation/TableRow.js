@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useUpdateRow from '../../hooks/useUpdateRow';
+const homepageUrl = process.env.REACT_APP_HOMEPAGE_URL;
+
 
 function TableRow({ tablerow }) {
   const [data, setData] = useState([]);
@@ -8,7 +10,7 @@ function TableRow({ tablerow }) {
   
   
   useEffect(() => {
-    fetch('http://localhost:8888/api/translation.php?tablerow=' + tablerow)
+    fetch( homepageUrl + '/api/translation.php?tablerow=' + tablerow)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -28,7 +30,7 @@ function TableRow({ tablerow }) {
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, [tablerow]);
 
 
   const { updateRow } = useUpdateRow(); // Use the custom hook

@@ -1,4 +1,3 @@
-// mergePdf.js
 import { PDFDocument } from 'pdf-lib';
 
 export async function mergePages(originalPdfBuffer) {
@@ -10,7 +9,6 @@ export async function mergePages(originalPdfBuffer) {
     console.log(`Total pages in original PDF: ${pages.length}`);
 
     for (let i = 0; i < pages.length; i += 4) {
-    // for (let i = 0; i < 88; i += 4) {
         const [embeddedPage1, embeddedPage2, embeddedPage3, embeddedPage4] = await Promise.all([
             i < pages.length ? newPdfDoc.embedPage(pages[i]) : null,
             i + 1 < pages.length ? newPdfDoc.embedPage(pages[i + 1]) : null,
@@ -33,46 +31,31 @@ export async function mergePages(originalPdfBuffer) {
     }
 
     const mergedPdfBytes = await newPdfDoc.save();
-    // const mergedPdfDataUrl = `data:application/pdf;base64,${Buffer.from(mergedPdfBytes).toString('base64')}`;
-    // const mergedPdfDataUrl = `data:application/pdf;base64,${btoa(String.fromCharCode(...new Uint8Array(mergedPdfBytes)))}`;
-    // const mergedPdfDataUrl = `data:application/pdf;base64,${uint8ArrayToBase64(mergedPdfBytes)}`;
-    // console.log(mergedPdfDataUrl)
 
     // downloadPdf(mergedPdfBytes)
     const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
     const blobUrl = URL.createObjectURL(blob);
 
     return blobUrl;
-    // return mergedPdfDataUrl;
 }
 
-function uint8ArrayToBase64(buffer) {
-    let binary = '';
-    let bytes = new Uint8Array(buffer);
-    let len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[i]);
-    }
-    return window.btoa(binary);
-}
+// function downloadPdf(mergedPdfBytes) {
+//     // Convert bytes to a Blob
+//     const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
 
-function downloadPdf(mergedPdfBytes) {
-    // Convert bytes to a Blob
-    const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
+//     // Create an Object URL from the Blob
+//     const url = window.URL.createObjectURL(blob);
 
-    // Create an Object URL from the Blob
-    const url = window.URL.createObjectURL(blob);
+//     // Create an anchor element and trigger the download
+//     const a = document.createElement('a');
+//     a.style.display = 'none';
+//     a.href = url;
+//     a.download = 'merged.pdf';  // You can specify a filename here
 
-    // Create an anchor element and trigger the download
-    const a = document.createElement('a');
-    a.style.display = 'none';
-    a.href = url;
-    a.download = 'merged.pdf';  // You can specify a filename here
+//     document.body.appendChild(a);
+//     a.click();
 
-    document.body.appendChild(a);
-    a.click();
-
-    // Cleanup
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
-}
+//     // Cleanup
+//     window.URL.revokeObjectURL(url);
+//     document.body.removeChild(a);
+// }

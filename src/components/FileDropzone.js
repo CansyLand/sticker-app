@@ -39,12 +39,12 @@ function FileDropzone({ onFileProcessed, onStartProcessing }) {
   };
 
   return (
-    <div className="w-full p-5">
+    <div className="w-full h-full p-7">
       <label
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onClick={openFilePicker}
-        className="flex justify-center  w-full h-96 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none"
+        className="flex justify-center  w-full h-full px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none"
       >
         <span className="flex items-center space-x-2">
           <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24"

@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 
 function Loading() {
   return (
-    <div className="w-full p-5">
+    <div className="w-full h-full p-15">
       <label
-        className="flex justify-center  w-full h-96 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none"
+        className="flex justify-center  w-full h-full px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none"
       >
         <span className="flex items-center space-x-2">
 

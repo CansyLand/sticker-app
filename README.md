@@ -1,3 +1,15 @@
+# Sticker-App
+
+Convert .xlsx table rows to pdf stickers
+
+## Setup
+
+For deployment change package.json homepage to your url path
+
+## To-Do
+
+Move sticker content / layout from hardcoded to database
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

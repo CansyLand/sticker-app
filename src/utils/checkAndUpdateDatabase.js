@@ -1,9 +1,11 @@
+const homepageUrl = process.env.REACT_APP_HOMEPAGE_URL;
+
 // Function to handle SQLite database operations
 function checkAndUpdateDatabase(jsonData, callback) {
     // Function to add a missing value to the SQLite database
     const createRowInDatabase = async (tablerow, val) => {
         try {
-            const response = await fetch('http://localhost:8888/api/add-row.php', {
+            const response = await fetch(homepageUrl + '/api/add-row.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -24,7 +26,7 @@ function checkAndUpdateDatabase(jsonData, callback) {
 
     // Fetch the entire SQLite database
     const fetchDatabase = async () => {
-        const response = await fetch('http://localhost:8888/api/fetch-database.php');
+        const response = await fetch(homepageUrl + '/api/fetch-database.php');
         const databaseData = await response.json();
        
         // These are the columns we are interested in the jsonData

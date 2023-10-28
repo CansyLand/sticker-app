@@ -1,4 +1,5 @@
 import { useState } from 'react';
+const homepageUrl = process.env.REACT_APP_HOMEPAGE_URL;
 
 function useUpdateRow() {
   const [loading, setLoading] = useState(false);
@@ -7,7 +8,7 @@ function useUpdateRow() {
   const updateRow = async (id, lang, val) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:8888/api/update.php`, {
+      const response = await fetch(homepageUrl + `/api/update.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
