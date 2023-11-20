@@ -5,10 +5,26 @@ Convert .xlsx table rows to pdf stickers
 ## Setup
 
 For deployment change package.json homepage to your url path
+and App.js router route!
 
 ## To-Do
 
+seperate pdf generation in own file
+rething folder structure
 Move sticker content / layout from hardcoded to database
+Why is ftp uploaded files structure differnt?
+change App.js router route to .env
+green upload indicator
+red api call indicator
+date updator
+fav icon
+safari print icon
+move api outside of build folder
+auto upload via cml?
+
+PDF maker
+auto safer
+
 
 # Getting Started with Create React App
 

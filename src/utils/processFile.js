@@ -109,7 +109,7 @@ const processFile = (file, callback) => {
                             w: stickerWidth,
                             h: stickerHeight,
                             lineWidth: 1,
-                            lineColor: 'black'
+                            lineColor: 'white'
                         },
                         { text: bezeichnung, style: 'stickerText', alignment: 'center' },
                     ],
@@ -123,6 +123,7 @@ const processFile = (file, callback) => {
 
                 const stickerContent = {
                     stack: [
+                        { text: "", margin: [0, 20, 0, 0]},
                         { svg: logo, width: 150, x: 67, y: 0 },
                         // { text: pageIndex, style: 'stickerText', alignment: 'center' },
                         { text: 'Cocon Commerz GmbH', style: 'stickerText', alignment: 'center', margin: [0, 1, 0, 0] },
@@ -131,7 +132,14 @@ const processFile = (file, callback) => {
 
                         // { text: bezeichnung, style: 'stickerText', alignment: 'center', margin: [0, 20, 0, 0] },
                         { text: translate(translationTable, warengruppe, languages) , style: 'stickerText', alignment: 'center', margin: [0, 10, 0, 0] },
-                        { text: 'Modell / Type / Модель: ' + model, style: 'stickerText', alignment: 'center' },
+                        // { text: 'Modell / Type / Модель: ' + model, style: 'boldText', alignment: 'center' },
+                        {
+                            text: [
+                                { text: 'Modell / Type / Модель: ', style: 'stickerText' },
+                                { text: model.toUpperCase(), style: 'boldText' }
+                            ],
+                            alignment: 'center'
+                        },
                         
                         { text: translate(translationTable, composition, languages), style: 'stickerText', alignment: 'center' },
 
@@ -145,9 +153,9 @@ const processFile = (file, callback) => {
                         { text: 'Artikel / Article / Артикул: ' + articlelNr, style: 'stickerText', alignment: 'center', margin: [0, 10, 0, 0]  },
                         { text: translate(translationTable, madeIn, languages), style: 'stickerText', alignment: 'center', margin: [0, 10, 0, 0] },
 
-                        { text: 'Herstellungsdatum\nDate of manufacture\nДата изготовления:', style: 'stickerText', alignment: 'center', margin: [0, 10, 0, 0] },
+                        { text: 'Herstellungsdatum / Date of manufacture\nДата изготовления:', style: 'stickerText', alignment: 'center', margin: [0, 10, 0, 0] },
                         { text: excelDateToJSDate(dateOfManufacture), style: 'stickerText', alignment: 'center', margin: [0, 0, 0, 15] },
-                        { svg: eacLogo, width: 40, x: 120, y: 0 },
+                        { svg: eacLogo, width: 20, x: 130, y: 0 },
                     ],
                     // absolutePosition: {
                     //     x: (stickerIndex % 2) * pageWidth - stickerWidth, // 0 for the first and third canvas, stickerWidth for the second and fourth
@@ -166,11 +174,15 @@ const processFile = (file, callback) => {
             const pdfDocDefinition = {
                 content: pdfContent,
                 pageSize: 'A6',
-                pageMargins: [10, 10, 10, 10], // Adjust as needed
+                pageMargins: [10, 10, 10, 10],
                 styles: {
                     stickerText: {
-                        fontSize: 10, // Adjust as needed
-                        margin: [0, 2], // [horizontal, vertical] margin. Adjust as needed
+                        fontSize: 10,
+                        margin: [0, 2], // [horizontal, vertical]
+                    },
+                    boldText: {
+                        fontSize: 11,
+                        bold: true,
                     }
                 }
             };
