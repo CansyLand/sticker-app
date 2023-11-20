@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import processFile from './../utils/processFile';
+import processFile from '../../utils/processFile';
 
 function FileDropzone({ onFileProcessed, onStartProcessing }) {
   const fileInputRef = useRef(null);

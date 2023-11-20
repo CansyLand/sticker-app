@@ -6,7 +6,7 @@ import Loading from '../components/Loading';
 import Navbar from '../components/Navbar';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-function Upload() {
+function UploaderPage() {
   const [pdfDataUrl, setPdfDataUrl] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
 

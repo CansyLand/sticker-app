@@ -9,10 +9,13 @@ and App.js router route!
 
 ## To-Do
 
-seperate pdf generation in own file
-rething folder structure
-Move sticker content / layout from hardcoded to database
-Why is ftp uploaded files structure differnt?
+- seperate pdf generation in own file
+- rething folder structure
+
+🔥 port to typescript piece by piece
+
+remove zombie files
+
 change App.js router route to .env
 green upload indicator
 red api call indicator
@@ -21,9 +24,12 @@ fav icon
 safari print icon
 move api outside of build folder
 auto upload via cml?
+show message if new row is addet to db
 
 PDF maker
 auto safer
+Move sticker content / layout from hardcoded to database
+Why is ftp uploaded files structure differnt?
 
 
 # Getting Started with Create React App

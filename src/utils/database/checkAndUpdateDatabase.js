@@ -72,6 +72,8 @@ function checkAndUpdateDatabase(jsonData, callback) {
             }
         }
 
+        console.log("Updated Database Data:", databaseData);
+
         // Return the updated database data using a callback
         callback(databaseData);
     }

@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import TableRow from '../components/Translation/TableRow';
 
 
-function Translation() {
+function TranslationPage() {
   return (
     <div className="flex flex-col w-full border-opacity-50">
       <Navbar></Navbar>
@@ -16,4 +16,4 @@ function Translation() {
   );
 }
 
-export default Translation;
+export default TranslationPage;
