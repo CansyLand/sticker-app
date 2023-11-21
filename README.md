@@ -7,6 +7,10 @@ Convert .xlsx table rows to pdf stickers
 For deployment change package.json homepage to your url path
 and App.js router route!
 
+## Local development
+
+- Backend use MAMP
+
 ## To-Do
 
 green upload indicator
