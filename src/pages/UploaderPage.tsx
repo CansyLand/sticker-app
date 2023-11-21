@@ -1,14 +1,26 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
-import FileDropzone from 'components/FileDropzone'
+import FileDropzone from 'components/upload/FileDropzone'
 import Loading from 'components/common/Loading'
 import Navbar from 'components/common/Navbar'
+import DatePickerModal from 'components/upload/DatePickerModal'
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 function UploaderPage() {
 	const [pdfDataUrl, setPdfDataUrl] = useState(null)
 	const [isProcessing, setIsProcessing] = useState(false)
+	const [isModalOpen, setIsModalOpen] = useState(true)
+	const [selectedDate, setSelectedDate] = useState<Date | null>(null)
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false)
+	}
+	const handleContinue = (date: Date | null) => {
+		setSelectedDate(date) // Save the selected date
+		setIsModalOpen(false) // Close the modal
+	}
 
 	const handleFileProcessed = (dataUrl: any) => {
 		setPdfDataUrl(dataUrl)
@@ -32,9 +44,16 @@ function UploaderPage() {
 					<FileDropzone
 						onFileProcessed={handleFileProcessed}
 						onStartProcessing={() => setIsProcessing(true)}
+						selectedDate={selectedDate}
 					/>
 				)}
 			</div>
+			{isModalOpen && (
+				<DatePickerModal
+					onClose={handleCloseModal}
+					onContinue={handleContinue}
+				/>
+			)}
 		</div>
 	)
 }

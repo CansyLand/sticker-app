@@ -13,7 +13,6 @@ and App.js router route!
 
 ## To-Do
 
-date updator
 fav icon
 safari print icon
 move api outside of build folder

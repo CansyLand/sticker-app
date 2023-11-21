@@ -1,5 +1,5 @@
 import Navbar from 'components/common/Navbar'
-import TableRow from 'components/Translation/TableRow'
+import TableRow from 'components/translation/TableRow'
 
 function TranslationPage() {
 	return (

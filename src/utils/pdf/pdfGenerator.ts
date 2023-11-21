@@ -5,7 +5,11 @@ import { logo } from '../../graphics/privatsachen-logo.js'
 import { eacLogo } from '../../graphics/eac-logo.js'
 import { waeschefont } from '../../graphics/font.js'
 
-import { translate, excelDateToJSDate } from './utilityFunctions'
+import {
+	translate,
+	excelDateToJSDate,
+	formatDateToMMYYYY,
+} from './utilityFunctions'
 import { TDocumentDefinitions } from 'pdfmake/interfaces'
 
 // Set up fonts
@@ -28,6 +32,7 @@ pdfMake.fonts = {
 const generatePDF = (
 	jsonData: any[],
 	translationTable: any[],
+	selectedDate: Date | null,
 	callback: (arg0: string) => void
 ) => {
 	const mmToPoints = (mm: number) => (mm * 72) / 25.4
@@ -53,7 +58,9 @@ const generatePDF = (
 
 		// Waschsymbole
 		const madeIn = rowData['ursprungsland']
-		const dateOfManufacture = rowData['erstelldatum']
+		const dateOfManufacture = selectedDate
+			? formatDateToMMYYYY(selectedDate)
+			: excelDateToJSDate(rowData['erstelldatum'])
 
 		const stickerBorder = {
 			canvas: [
@@ -163,7 +170,7 @@ const generatePDF = (
 					margin: [0, 10, 0, 0],
 				},
 				{
-					text: excelDateToJSDate(dateOfManufacture),
+					text: dateOfManufacture,
 					style: 'stickerText',
 					alignment: 'center',
 					margin: [0, 0, 0, 15],

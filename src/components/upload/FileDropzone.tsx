@@ -3,10 +3,12 @@ import processFile from 'utils/pdf/processFile'
 interface FileDropzoneProps {
 	onFileProcessed: (file: File) => void
 	onStartProcessing: () => void
+	selectedDate: Date | null
 }
 function FileDropzone({
 	onFileProcessed,
 	onStartProcessing,
+	selectedDate,
 }: FileDropzoneProps) {
 	const fileInputRef = useRef(null)
 
@@ -30,7 +32,7 @@ function FileDropzone({
 
 		// Process the files here
 		console.log(files)
-		processFile(files[0], onFileProcessed)
+		processFile(files[0], selectedDate, onFileProcessed)
 	}
 
 	const openFilePicker = () => {
