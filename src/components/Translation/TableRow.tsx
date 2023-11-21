@@ -3,10 +3,18 @@ import useUpdateRow from 'hooks/useUpdateRow'
 
 const apiUrl = process.env.REACT_APP_API_ENDPOINT
 
+type InputStatus = 'default' | 'changed' | 'success' | 'error'
+interface InputStatusState {
+	[key: string]: InputStatus
+}
+
 function TableRow({ tablerow }: any) {
 	const [data, setData] = useState<any[]>([])
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<Error | null>(null)
+	const [inputStatus, setInputStatus] = useState<InputStatusState>({})
+
+	const { updateRow } = useUpdateRow()
 
 	useEffect(() => {
 		fetch(apiUrl + '/api/translation.php?tablerow=' + tablerow)
@@ -31,8 +39,6 @@ function TableRow({ tablerow }: any) {
 			})
 	}, [tablerow])
 
-	const { updateRow } = useUpdateRow()
-
 	const handleInputChange = (
 		id: any,
 		lang: string,
@@ -53,7 +59,46 @@ function TableRow({ tablerow }: any) {
 			})
 		})
 
-		updateRow(id, lang, newValue)
+		setInputStatus((prevStatus) => ({
+			...prevStatus,
+			[`${id}-${lang}`]: 'changed',
+		}))
+
+		updateRow(id, lang, newValue).then((responseData) => {
+			console.log('Response Data:', responseData)
+
+			// Check if the response data contains the success message
+			if (
+				responseData &&
+				responseData.message === 'Data updated successfully'
+			) {
+				setInputStatus((prevStatus) => ({
+					...prevStatus,
+					[`${id}-${lang}`]: 'success',
+				}))
+			} else {
+				// Handle any other cases as an error
+				setInputStatus((prevStatus) => ({
+					...prevStatus,
+					[`${id}-${lang}`]: 'error',
+				}))
+			}
+		})
+	}
+
+	const getStatusClass = (id: any, lang: string) => {
+		const statusKey = `${id}-${lang}`
+		const status = inputStatus[statusKey]
+		switch (status) {
+			case 'changed':
+				return 'input-warning'
+			case 'success':
+				return 'input-success'
+			case 'error':
+				return 'input-error'
+			default:
+				return ''
+		}
 	}
 
 	const headers = data.length > 0 ? Object.keys(data[0]) : []
@@ -100,7 +145,7 @@ function TableRow({ tablerow }: any) {
 												placeholder={row[header]}
 												className={`input input-bordered w-full max-w-xs ${
 													header === 'wash' ? 'waesche-font' : ''
-												}`}
+												} ${getStatusClass(row.id, header)}`}
 												onChange={(e) => handleInputChange(row.id, header, e)}
 											/>
 										)}

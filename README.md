@@ -13,8 +13,6 @@ and App.js router route!
 
 ## To-Do
 
-green upload indicator
-red api call indicator
 date updator
 fav icon
 safari print icon
@@ -29,6 +27,8 @@ PDF maker
 auto safer
 Move sticker content / layout from hardcoded to database
 Why is ftp uploaded files structure differnt?
+
+Write good readme
 
 # Getting Started with Create React App
 
