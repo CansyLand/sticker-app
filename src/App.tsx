@@ -5,7 +5,7 @@ import TranslationPage from './pages/TranslationPage'
 import './App.css'
 
 function App() {
-	const basename = process.env.REACT_APP_STICKER_APP_PATH || ''
+	const basename = process.env.REACT_APP_STICKER_APP_PATH
 
 	return (
 		<Router basename={basename}>

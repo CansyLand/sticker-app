@@ -9,15 +9,6 @@ and App.js router route!
 
 ## To-Do
 
-- seperate pdf generation in own file
-- rething folder structure
-
-🔥 port to typescript piece by piece
-
-remove zombie files
-clean processFile.ts
-
-change App.js router route to .env
 green upload indicator
 red api call indicator
 date updator
