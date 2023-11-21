@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 import FileDropzone from 'components/upload/FileDropzone'
@@ -27,6 +27,16 @@ function UploaderPage() {
 		setIsProcessing(false)
 	}
 
+	const pdfIframeRef = useRef<HTMLIFrameElement>(null)
+
+	const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+
+	const handlePrint = () => {
+		if (pdfIframeRef.current) {
+			pdfIframeRef.current.contentWindow?.print()
+		}
+	}
+
 	return (
 		<div className='flex flex-col w-full h-screen border-opacity-50'>
 			<Navbar></Navbar>
@@ -34,12 +44,23 @@ function UploaderPage() {
 				{isProcessing ? (
 					<Loading></Loading>
 				) : pdfDataUrl ? (
-					<iframe
-						title='Generated PDF'
-						src={pdfDataUrl}
-						width='100%'
-						height='100%'
-					></iframe>
+					<>
+						<iframe
+							ref={pdfIframeRef}
+							title='Generated PDF'
+							src={pdfDataUrl}
+							width='100%'
+							height='100%'
+						></iframe>
+						{isSafari && (
+							<button
+								onClick={handlePrint}
+								className='btn btn-accent absolute top-4 right-4 m-2'
+							>
+								Drucke PDF
+							</button>
+						)}{' '}
+					</>
 				) : (
 					<FileDropzone
 						onFileProcessed={handleFileProcessed}

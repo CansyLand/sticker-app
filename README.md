@@ -13,8 +13,6 @@ and App.js router route!
 
 ## To-Do
 
-fav icon
-safari print icon
 move api outside of build folder
 auto upload via cml?
 show message if new row is addet to db

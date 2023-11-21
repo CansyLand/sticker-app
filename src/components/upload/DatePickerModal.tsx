@@ -6,43 +6,64 @@ interface ModalProps {
 }
 
 const DatePickerModal: React.FC<ModalProps> = ({ onClose, onContinue }) => {
-	const [selectedDate, setSelectedDate] = React.useState<Date | null>(null)
+	const [dateInput, setDateInput] = React.useState('')
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		let value = e.target.value
+		// Remove all non-digits and slashes
+		value = value.replace(/[^0-9/]/g, '')
+
+		// Automatically insert a slash after MM
+		if (value.length === 2 && !value.includes('/')) {
+			value += '/'
+		}
+
+		// Split the value into month and year
+		const parts = value.split('/')
+		if (parts[1] && parts[1].length > 4) {
+			// If year part is longer than 4 digits, truncate it
+			parts[1] = parts[1].substring(0, 4)
+			value = parts.join('/')
+		}
+
+		setDateInput(value)
+	}
 
 	const handleContinue = () => {
-		onContinue(selectedDate)
+		const [month, year] = dateInput.split('/')
+		if (month && year) {
+			const selectedDate = new Date(parseInt(year), parseInt(month) - 1)
+			onContinue(selectedDate)
+		} else {
+			onContinue(null)
+		}
 		onClose()
 	}
 
-	const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-		// Check if the clicked target is the modal backdrop itself
-		if (e.currentTarget === e.target) {
-			onClose()
-		}
-	}
-
 	return (
-		<div className='modal modal-open' onClick={handleBackdropClick}>
-			<div className='modal-box'>
+		<div
+			className='modal modal-open'
+			onClick={(e) => {
+				if (e.currentTarget === e.target) onClose()
+			}}
+		>
+			<div className='modal-box' onClick={(e) => e.stopPropagation()}>
 				<h3 className='font-bold text-lg'>Produktions Datum</h3>
 				<input
-					type='month'
-					className='input input-bordered w-full' // Full width date input
-					onChange={(e) => {
-						const [year, month] = e.target.value.split('-')
-						setSelectedDate(new Date(parseInt(year), parseInt(month) - 1))
-					}}
+					type='text'
+					placeholder='MM/YYYY'
+					value={dateInput}
+					pattern='(0[1-9]|1[0-2])\/[0-9]{4}'
+					className='input input-bordered w-full'
+					onChange={handleInputChange}
 				/>
 				<div className='modal-action justify-between'>
-					{' '}
-					{/* Space out buttons */}
 					<button onClick={onClose} className='btn btn-outline w-5/12'>
 						Ignorieren
-					</button>{' '}
-					{/* Slightly less than half width */}
+					</button>
 					<button onClick={handleContinue} className='btn btn-primary w-5/12'>
 						Weiter
-					</button>{' '}
-					{/* Slightly less than half width */}
+					</button>
 				</div>
 			</div>
 		</div>
