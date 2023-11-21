@@ -15,6 +15,7 @@ and App.js router route!
 🔥 port to typescript piece by piece
 
 remove zombie files
+clean processFile.ts
 
 change App.js router route to .env
 green upload indicator
@@ -25,12 +26,14 @@ safari print icon
 move api outside of build folder
 auto upload via cml?
 show message if new row is addet to db
+waschanleitung own tab
+glyphs collection
 
+graphics?
 PDF maker
 auto safer
 Move sticker content / layout from hardcoded to database
 Why is ftp uploaded files structure differnt?
-
 
 # Getting Started with Create React App
 
