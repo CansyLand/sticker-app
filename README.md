@@ -1,27 +1,31 @@
 # Sticker-App
 
-Convert .xlsx table rows to pdf stickers
+Converts order list .xlsx tables to pdf shipment stickers.
 
 ## Setup
 
-For deployment change package.json homepage to your url path
-and App.js router route!
+For deployment change package.json homepage to your url path.
+Also rename .env.example to .env and update the variables.
+
+npm run build
+upload to ./build directory your ftp server
 
 ## Local development
 
-- Backend use MAMP
+This app uses a translations labrary api in ./backend
+Copy its content to MAMPs htdocs directory and run local server
+
+For frontend run `npm start`
 
 ## To-Do
 
-move api outside of build folder
-auto upload via cml?
-show message if new row is addet to db
-waschanleitung own tab
-glyphs collection
+Show message if new row is addet to translation db
+Waschanleitung own tab
+Glyphs collection
 
 graphics?
 PDF maker
-auto safer
+auto db safer if its different
 Move sticker content / layout from hardcoded to database
 Why is ftp uploaded files structure differnt?
 

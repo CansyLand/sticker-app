@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import React from 'react'
 import UploaderPage from './pages/UploaderPage'
 import TranslationPage from './pages/TranslationPage'
 import './App.css'

@@ -1,1 +1,0 @@
-export const DATABASE_API = 'https://www.parutkin.com/privatsachen/sticker-app'

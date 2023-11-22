@@ -10,6 +10,8 @@
 
 # production
 /build
+deploy.sh
+README-PRIVATE.md
 
 # misc
 .DS_Store
