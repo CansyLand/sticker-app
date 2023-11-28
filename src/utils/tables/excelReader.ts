@@ -22,7 +22,10 @@ const readExcelFile = (
 			const workbook = XLSX.read(data, { type: 'binary' })
 			const firstSheetName = workbook.SheetNames[0]
 			const worksheet = workbook.Sheets[firstSheetName]
-			const jsonData = XLSX.utils.sheet_to_json(worksheet)
+			let jsonData = XLSX.utils.sheet_to_json(worksheet)
+
+			// Duplicate each row according to its 'bestellmenge' value.
+			jsonData = transformData(jsonData)
 
 			callback(jsonData) // Pass the parsed data back
 		} else {
@@ -35,6 +38,27 @@ const readExcelFile = (
 	}
 
 	reader.readAsBinaryString(file)
+}
+
+/**
+ * Transforms the input data by duplicating each row based on its 'bestellmenge' value.
+ *
+ * @param data - Array of data objects to be transformed.
+ * @returns Transformed array with duplicated rows.
+ */
+const transformData = (data: any[]) => {
+	let transformedData: any = []
+
+	data.forEach((row) => {
+		const count = row.bestellmenge || 1 // Default to 1 if bestellmenge is not provided
+		transformedData.push(row) // Push the original row first
+		for (let i = 1; i < count; i++) {
+			// Start from 1 as original row is already added
+			transformedData.push({ ...row })
+		}
+	})
+
+	return transformedData
 }
 
 export { readExcelFile }
