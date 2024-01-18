@@ -49,6 +49,7 @@ function checkAndUpdateDatabase(
 
 		// Set to track tablerow and val combinations that have been processed
 		const processedValues = new Set()
+		let newRowInDatabase = false
 
 		// Iterate over jsonData and check against databaseData
 		for (const entry of jsonData) {
@@ -74,11 +75,17 @@ function checkAndUpdateDatabase(
 					databaseData.push(newRow)
 					// Mark this combination as processed
 					processedValues.add(uniqueKey)
+
+					newRowInDatabase = true
 				}
 			}
 		}
 
 		console.log('Updated Database Data:', databaseData)
+		if (newRowInDatabase)
+			alert(
+				'Ein neuer Eintrag wurde zur Übersetzung hinzugefügt. Im Reiter Übersetzungen neue werte einfügen.'
+			)
 
 		// Return the updated database data using a callback
 		callback(databaseData)

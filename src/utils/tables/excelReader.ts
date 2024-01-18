@@ -11,6 +11,7 @@ const readExcelFile = (
 			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 	) {
 		console.error('Invalid file type')
+		alert('Datei muss eine .xlsx tabelle sein')
 		return
 	}
 

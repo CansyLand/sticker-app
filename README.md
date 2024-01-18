@@ -2,9 +2,9 @@
 
 Converts order list .xlsx tables to pdf shipment stickers.
 
-## Setup
+## Setup for deployment
 
-For deployment change package.json homepage to your url path.
+Change package.json homepage to your url path.
 Also rename .env.example to .env and update the variables.
 
 npm run build
@@ -12,7 +12,7 @@ upload to ./build directory your ftp server
 
 ## Local development
 
-This app uses a translations labrary api in ./backend
+This app uses a language translations api in ./backend
 Copy its content to MAMPs htdocs directory and run local server
 
 For frontend run `npm start`
