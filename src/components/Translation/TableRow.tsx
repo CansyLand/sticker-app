@@ -115,7 +115,7 @@ function TableRow({ tablerow }: any) {
 						{headers
 							.filter((header) => {
 								if (header === 'id' || header === 'tablerow') return false
-								if (header === 'wash' && tablerow !== 'qualitaet1_hinweis')
+								if (header === 'wash' && tablerow !== 'Materialzusammensetzung')
 									return false
 								return true
 							})
@@ -130,7 +130,10 @@ function TableRow({ tablerow }: any) {
 							{headers
 								.filter((header) => {
 									if (header === 'id' || header === 'tablerow') return false
-									if (header === 'wash' && tablerow !== 'qualitaet1_hinweis')
+									if (
+										header === 'wash' &&
+										tablerow !== 'Materialzusammensetzung'
+									)
 										return false
 									return true
 								})
