@@ -9,7 +9,7 @@ export function translate(translationTable: any[], val: any, languages: any[]) {
 		return val
 	}
 
-	return languages.map((lang) => entry[lang] || val).join(' / ')
+	return languages.map((lang) => entry[lang] || '' /*val*/).join(' / ')
 }
 
 // Function to convert Excel date format to JavaScript date

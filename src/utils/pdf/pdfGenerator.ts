@@ -47,17 +47,14 @@ const generatePDF = (
 	const pdfContent: any[] = []
 
 	jsonData.forEach((rowData, pageIndex) => {
-		// ... construct the content for each sticker ...
-		// For example:
-		const bezeichnung = rowData['bezeichnung']
-		const warengruppe = rowData['warengruppe']
-		const model = rowData['kurzbezeichnung'] // model
-		const articlelNr = rowData['artikel_nr']
-		const composition = rowData['qualitaet1_hinweis'] // 100% Seide
-		const size = rowData['farb_bezeichnung']
+		const warengruppe = rowData['Produktgruppenbezeichnung']
+		const model = rowData['Modell'] // model
+		const articlelNr = rowData['Modellname']
+		const composition = rowData['Materialzusammensetzung'] // 100% Seide // Waschsymbole
+		const size = rowData['Größenbezeichnung']
+		const madeIn =
+			rowData['Ursprungsland laut Modell-/Artikelstamm (Bezeichnung)']
 
-		// Waschsymbole
-		const madeIn = rowData['ursprungsland']
 		const dateOfManufacture = selectedDate
 			? formatDateToMMYYYY(selectedDate)
 			: excelDateToJSDate(rowData['erstelldatum'])
@@ -73,7 +70,7 @@ const generatePDF = (
 					lineWidth: 1,
 					lineColor: 'white', // 🔥 set to black for debug
 				},
-				{ text: bezeichnung, style: 'stickerText', alignment: 'center' },
+				{ text: model, style: 'stickerText', alignment: 'center' },
 			],
 			absolutePosition: {
 				x: 0, //(stickerIndex % 2) * stickerWidth, // 0 for the first and third canvas, stickerWidth for the second and fourth

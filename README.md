@@ -5,6 +5,8 @@ Converts order list .xlsx tables to pdf shipment stickers.
 ## Setup for deployment
 
 Change package.json homepage to your url path.
+"homepage": "https://yourDomain.com/path/to/app"
+
 Also rename .env.example to .env and update the variables.
 
 npm run build
@@ -15,21 +17,26 @@ upload to ./build directory your ftp server
 This app uses a language translations api in ./backend
 Copy its content to MAMPs htdocs directory and run local server
 
+package.json set "homepage" to "http://localhost:3000"
+
+.env
+REACT_APP_API_BASE_URL=http://localhost:3000
+REACT_APP_API_ENDPOINT=http://localhost:8888
+REACT_APP_STICKER_APP_PATH=/
+
 For frontend run `npm start`
 
 ## To-Do
 
-Show message if new row is addet to translation db
-Waschanleitung own tab
+Show version or upload date in console
 Glyphs collection
+AI translater
 
 graphics?
 PDF maker
 auto db safer if its different
 Move sticker content / layout from hardcoded to database
 Why is ftp uploaded files structure differnt?
-
-Write good readme
 
 # Getting Started with Create React App
 

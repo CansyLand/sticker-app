@@ -34,10 +34,10 @@ function checkAndUpdateDatabase(
 
 		// These are the columns we are interested in the jsonData
 		const columns = [
-			'warengruppe',
-			'qualitaet1_hinweis',
-			'ursprungsland',
-			'farb_bezeichnung',
+			'Produktgruppenbezeichnung', // Hosen, Röcke, Kleid
+			'Materialzusammensetzung', // 65 % organic cotton / 33 % tencel / 2 % elastane
+			'Ursprungsland laut Modell-/Artikelstamm (Bezeichnung)', // EU mit Präferenz
+			'Größenbezeichnung', // onesize, 1, 2, 3
 		]
 
 		// The SQLite database table is a little bit different structured
@@ -63,7 +63,7 @@ function checkAndUpdateDatabase(
 				const existsInDatabase =
 					databaseData.some(
 						(dbEntry: { tablerow: string; val: any }) =>
-							dbEntry.tablerow === row && dbEntry.val === valueInJsonData
+							dbEntry.tablerow === row && dbEntry.val == valueInJsonData
 					) || processedValues.has(uniqueKey)
 
 				if (!existsInDatabase) {
